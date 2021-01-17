@@ -1,0 +1,41 @@
+version: '3.8'
+services:
+  kafka:
+    image: kafka
+    container_name: kafka
+    ports:
+      - '9092:9092'
+    networks:
+      - devnet
+    volumes:
+      - 'kafka_data:/var/lib/kafka'
+  user-service:
+    container_name: user
+    build: ./user
+    ports:
+      - '8090:8090'
+    networks:
+      - devnet
+    depends_on:
+      - userdata
+      - kafka
+  userdata:
+    container_name: userdata
+    image: postgres
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=users
+  message-service:
+    container_name: message
+    build: ./message
+    ports:
+      - '8090:8090'
+    networks:
+      - devnet
+    depends_on:
+      - kafka
+
+

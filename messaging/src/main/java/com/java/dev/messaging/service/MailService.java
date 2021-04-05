@@ -66,7 +66,7 @@ public class MailService {
     private void sendMail(String subject, String recipient, String name) {
 		MimeMessagePreparator messagePreparator = mimeMessage -> {
 			MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
-			messageHelper.setFrom("account-update@dropisle.com", "Dropisle");
+			messageHelper.setFrom("EMAIL_ACCOUNT", "EMAIL_NAME");
 			messageHelper.setTo(recipient);
 			messageHelper.setSubject(subject);
 			String content = build(name);
